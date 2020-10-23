@@ -275,7 +275,7 @@ __Dictionary comprehension trong Python__
 + `Dictionary comprehension` là cách đơn giản, rút gọn để tạo `dictionary` mới từ một vòng lặp trong `Python`. Câu lệnh sẽ bao gồm một cặp biểu thức `(key:value)` cùng câu lệnh `for` hoặc `if`, tất cả đặt trong dấu { }
 _Ví dụ_:
 ```py
-# tạo mảng số lẻ
+# tạo dictionary gồm các số lẻ < 20
 le = {x: 2*x+1 for x in range(10)}
 print(le)
 ```
@@ -283,3 +283,6 @@ Ta được kết quả:
 ```
 {0: 1, 1: 3, 2: 5, 3: 7, 4: 9, 5: 11, 6: 13, 7: 15, 8: 17, 9: 19}
 ```
+
+
+Tham khảo tại: <https://quantrimang.com/gioi-thieu-qua-ve-chuoi-so-list-trong-python-140881#mcetoc_1bs0pu9a20>
