@@ -283,6 +283,203 @@ Ta được kết quả:
 ```
 {0: 1, 1: 3, 2: 5, 3: 7, 4: 9, 5: 11, 6: 13, 7: 15, 8: 17, 9: 19}
 ```
+### 7. Hướng đối tượng trong Python
+
+__Class và Object__
+
+Cách tạo một class
+```python
+class Class_Name:
+    'docstring'
+    pass
+```
+Để định nghĩa một class ta dùng từ khóa `class`, tiếp sau là tên class và dấu hai chấm( : ). Dòng đầu tiên trong thân của lớp là chuỗi (string) mô tả ngắn gọn về lớp này (Không bắt buộc), bạn có thể truy cập vào chuỗi này thông qua `Class_Name.__doc__ .` Trong thân của lớp bạn có thể khai báo các thuộc tính, phương thức (Method) và các phương thức khởi tạo (Constructor).
+
+Ví dụ:
+```python
+class Classroom:
+    def __init__(self, name):               # phương thức khởi tạo
+        self.name = name
+        self.prop = []
+    def add_sub(self, sub, point):          # phương thức add các thuộc tính    
+        self.prop.append({
+            'subject': sub,
+            'point': point
+        })
+    
+    def average_point(self):                # hàm tính điểm trung bình
+        total = 0
+        for p in self.prop:
+            total += p['point']
+        return (total/len(self.prop))
+    @classmethod                            # tạo 1 class method
+    def grade(cls, classroom):
+        new_class = Classroom(classroom.name + " - lop 10")
+        return new_class
+
+    @staticmethod                           # tạo 1 static method
+    def class_average(classroom):
+        return print('{} have average point: {}'.format(classroom.name, classroom.average_point()))
+
+# tạo 2 đối tượng kiểu Clasroom là John và Adam
+person1 = Classroom("John")                 
+person2 = Classroom("Adam")
+person1.add_sub("Math", 10)
+person1.add_sub("Physical", 9.5)
+person2.add_sub("Bio", 8)
+person2.add_sub("Math", 9.5)
+
+print(Classroom.grade(person1).name)
+print(person1.prop)
+print(Classroom.grade(person2).name)
+print(person2.prop)
+
+Classroom.class_average(person1)
+Classroom.class_average(person2)
+
+```
+Sau khi thực hiện chương trình trên, kết quả trên màn hình:
+
+```
+John - lop 10
+[{'subject': 'Math', 'point': 10}, {'subject': 'Physical', 'point': 9.5}]  
+Adam - lop 10
+[{'subject': 'Bio', 'point': 8}, {'subject': 'Math', 'point': 9.5}]        
+John have average point: 9.75
+Adam have average point: 8.7
+
+```
+
+__Kế thừa trong python__
+
+Kế thừa là một khía cạnh quan trọng của mô hình lập trình hướng đối tượng. Kế thừa cung cấp khả năng sử dụng lại mã cho chương trình vì chúng ta có thể sử dụng một lớp hiện có để tạo một lớp mới thay vì tạo nó từ đầu.
+
+Trong kế thừa, lớp con có được các thuộc tính và có thể truy cập tất cả các thành viên dữ liệu và các hàm được định nghĩa trong lớp cha. Một lớp con cũng có thể cung cấp việc triển khai cụ thể cho các hàm của lớp cha. Trong bài này, chúng ta sẽ thảo luận chi tiết về kế thừa.
+
+Trong python, một lớp dẫn xuất (hay còn gọi là lớp con - sub-class) có thể kế thừa lớp cơ sở (lớp cha - super-class) bằng cách chỉ đề cập đến cơ sở trong ngoặc sau tên lớp dẫn xuất. Sau đây là cú pháp để một lớp cơ sở kế thừa lớp dẫn xuất.
+
+Cú pháp:
+```py
+class derived_class(base class):
+    <class_suite>
+```
+Ví dụ:
+```py
+# tạo một class Oto và lớp dẫn xuất Toyota của lớp Oto
+
+class Oto:
+        def __init__(self, owner):
+                self.owner = owner
+class Toyota(Oto):
+        def __init__(self, owner, weight, height, price):
+                super().__init__(owner)
+                self.weight = weight
+                self.height = height
+                self.price = price
+        @classmethod
+        def show_info(cls, a):
+                print('Toyota có chủ sở hữu là {}, trọng lượng: {} kg, chiều cao: {} m, giá bán: {} đồng'.format(a.owner, a.weight, a.height, a.price))
+
+x = Toyota('Trung', 56, 1.5, 1450)
+Toyota.show_info(x)
+```
+Kết quả màn hình:
+```
+Toyota có chủ sở hữu là Trung, trọng lượng: 56 kg, chiều cao: 1.5 m, giá bán: 1450 đồng
+```
+
+__Decorator trong Python__
+
+Decorator là một hàm nhận tham số đầu vào là một hàm khác và mở rộng tính năng cho hàm đó mà không thay đổi nội dung của nó. Hiểu một cách cơ bản nhất, Decorator là một hàm có thể nhận các hàm khác, cho phép bạn chạy một số đoạn code trước hoặc sau hàm chính mà không thay đổi kết quả.
+
+Ví dụ:
+```py
+def decorator(func):
+    def inner():
+        print("Decorator!!!")
+        func()
+        print("Afetr Decorator!!!")
+    return inner
+
+@decorator
+def test():
+    print("Test!!!")
+
+test()
+    
+```
+Kết quả:
+```
+Decorator!!!
+Test!!!
+Afetr Decorator!!!
+```
+___
+
+## __Python Flask__
+
+Flask là một micro web framework được viết bằng Python, không yêu cầu tool hay thư viện cụ thể nào. Flask luôn hỗ trợ các thành phần tiện ích mở rộng cho ứng dụng như tích hợp cơ sở dữ liệu, xác thực biểu mẫu, xử lý upload, các công nghệ xác thực, template, email, RESTful, ..., chỉ khác là khi nào bạn muốn thì bạn mới đưa vào thôi. Người dùng có thể tập trung xây dựng web application ngay từ đầu trong một khoảng thời gian rất ngắn và có thể phát triển quy mô của ứng dụng theo yêu cầu.
 
 
-Tham khảo tại: <https://quantrimang.com/gioi-thieu-qua-ve-chuoi-so-list-trong-python-140881#mcetoc_1bs0pu9a20>
+### 1. Khởi tạo và kích hoạt môi trường ảo
+
+Cài đặt ứng dụng `virtualenv`
+```
+pip install virtualenv
+```
+Khởi tạo môi trường ảo
+```
+virtualenv hieple
+```
+Kích hoạt môi trường ảo
+```
+hieple\Scripts\activate
+```
+### 2. Cách cài đặt Flask
+
+Bật Terminal và gõ lệnh
+``` 
+pip install Flask
+```
+
+### 3. Hello World
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World "
+
+if __name__ == "__main__":   
+    app.run(debug=True)
+```
+
+Sau khi chạy chương trình trên, trang web sẽ được hiển thị ở: http://127.0.0.1:5000/
+
+Kết quả như sau
+
+![image](https://user-images.githubusercontent.com/22864889/97858075-34b7dd00-1d31-11eb-9c65-a44834fb28fe.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tham khảo tại: 
++ <https://niithanoi.edu.vn/instance-class-va-static-method-trong-python.html>
++ <https://quantrimang.com/gioi-thieu-qua-ve-chuoi-so-list-trong-python-140881#mcetoc_1bs0pu9a20>
++ <https://viettuts.vn/python/ke-thua-trong-python>

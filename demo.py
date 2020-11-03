@@ -85,3 +85,80 @@ print(dict4)
 # tạo dictionary gồm các số lẻ < 20
 le = {x: 2*x+1 for x in range(10)}
 print(le)
+
+# hướng đối tượng trong python
+
+class Classroom:
+    def __init__(self, name):               # phương thức khởi tạo
+        self.name = name
+        self.prop = []
+    def add_sub(self, sub, point):          # phương thức add các thuộc tính    
+        self.prop.append({
+            'subject': sub,
+            'point': point
+        })
+    
+    def average_point(self):                # hàm tính điểm trung bình
+        total = 0
+        for p in self.prop:
+            total += p['point']
+        return (total/len(self.prop))
+    @classmethod                            # tạo 1 class method
+    def grade(cls, classroom):
+        new_class = Classroom(classroom.name + " - lop 10")
+        return new_class
+
+    @staticmethod                           # tạo 1 static method
+    def class_average(classroom):
+        return print('{} have average point: {}'.format(classroom.name, classroom.average_point()))
+
+# tạo 2 đối tượng kiểu Clasroom là John và Adam
+person1 = Classroom("John")                 
+person2 = Classroom("Adam")
+person1.add_sub("Math", 10)
+person1.add_sub("Physical", 9.5)
+person2.add_sub("Bio", 8)
+person2.add_sub("Math", 9.5)
+
+print(Classroom.grade(person1).name)
+print(person1.prop)
+print(Classroom.grade(person2).name)
+print(person2.prop)
+
+Classroom.class_average(person1)
+Classroom.class_average(person2)
+
+
+# tạo một class Oto và lớp dẫn xuất Toyota của lớp Oto
+
+class Oto:
+        def __init__(self, owner):
+                self.owner = owner
+class Toyota(Oto):
+        def __init__(self, owner, weight, height, price):
+                super().__init__(owner)
+                self.weight = weight
+                self.height = height
+                self.price = price
+        @classmethod
+        def show_info(cls, a):
+                print('Toyota có chủ sở hữu là {}, trọng lượng: {} kg, chiều cao: {} m, giá bán: {} đồng'.format(a.owner, a.weight, a.height, a.price))
+
+x = Toyota('Trung', 56, 1.5, 1450)
+Toyota.show_info(x)
+
+# Ví dụ về Decorator
+
+def decorator(func):
+    def inner():
+        print("Decorator!!!")
+        func()
+        print("Afetr Decorator!!!")
+    return inner
+
+@decorator
+def test():
+    print("Test!!!")
+
+test()
+        
